@@ -1,0 +1,57 @@
+对于二叉树的层次遍历，使用队列
+要求按照层输出
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+ 
+ 
+class Solution {
+    /**
+     * @param root : The root of binary tree.
+     * @return : buttom-up level order a list of lists of integer
+     */
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode *root) {
+        // write your code here
+        vector<vector<int >> vc;
+        
+        if(!root) return vc;
+        
+        queue<TreeNode *> q;
+        
+        q.push(root);
+        
+        vector<int> one;
+        while(!q.empty()){
+            int levelnum = q.size();
+            
+            for(int i = 0; i < levelnum; i++){  // queue更新之前记录用levelnum记录该层个数
+                TreeNode * tmp = q.front();
+                q.pop();
+                
+                if(tmp->left) {
+                    q.push(tmp->left);
+                }
+                if(tmp->right){
+                    q.push(tmp->right);
+                }
+                
+                one.push_back(tmp->val);
+            }
+            
+            vc.push_back(one);
+            one.clear();
+        }
+        reverse(vc.begin(), vc.end());
+    }
+};
